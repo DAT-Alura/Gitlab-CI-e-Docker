@@ -76,3 +76,36 @@ Dentro do pipeline, podemos adicionar na palavra reservada “stage” o nome do
 ```yml
 stage: build
 ```
+
+## Aula 5
+
+1 - Um passo importante para a integração contínua, é o passo dos testes, pois é hora de saber se no decorrer do desenvolvimento de uma tarefa nada quebrou, ou seja, se algo que funcionava não deixou de funcionar. Porém de nada adianta os testes passarem se não conseguimos gerar um build de nossa aplicação. Com isso em mente, como podemos garantir que o passo de testes só aconteça após o build do projeto ser gerado com sucesso?
+
+- __A__
+Criando uma dependência entre tarefas no passo de testes. Podemos colocar essa dependência com o passo anterior, e dessa forma os testes só serão executados se o build estiver concluído com sucesso.
+```yml
+test-project:
+  dependencies:
+  - build-project
+```
+> Correto! Dessa forma, só executaremos os testes se o passo de build for executado antes com sucesso.
+
+- B
+Para criar uma dependência, basta colocar as duas tarefas no mesmo stage.
+```yml
+build-project:
+  image: jnlucas/minha-imagem:latest
+  stage: test
+  tags:
+  - executor-tarefas
+  script:
+  - python manage.py makemigrations
+  - python manage.py migrate
+
+test-project:
+  image: jnlucas/minha-imagem:latest
+  stage: test
+```
+
+- C
+Não é possível fazer essa configuração no pipeline, pois todas as tarefas devem ser executadas isoladamente.
