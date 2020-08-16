@@ -118,3 +118,44 @@ Não é possível fazer essa configuração no pipeline, pois todas as tarefas d
 - __Criando um par de chaves (pública e privada) no runner com o comando “ssh-keygen”, e em seguida disponibilizamos a chave pública no servidor de homologação.__
 > Correto! Dessa forma ao gerarmos um par de chaves, podemos adicionar a chave pública no servidor de homologação e garantir o acesso do executor de tarefas a essa máquina.
 - Para esse passo, o correto é realizar o deploy manualmente, pois não há maneiras de conceder acesso a outras máquinas.
+
+## Aula 7
+
+1 - Com a necessidade de melhorarmos a comunicação entre todos os envolvidos no projeto que estamos desenvolvendo no bytebank, precisamos que todos sejam informados sempre que uma entrega aconteça. Para isso, utilizaremos uma ferramenta chamada slack. Dentro da pipeline de integração contínua, sempre que algo aconteça de errado no processo de integração contínua, teremos que adicionar notificações de falhas ao slack. Para isso, vamos adicionar um job que cuide das notificações, mas como podemos garantir que essa notificação aconteça somente quando o pipeline falhar?
+
+- __A__
+Adicionando a tarefa a palavra reservada “when” ao job e definindo “on_failure” como parâmetro.
+```yml
+notificacao-falhas:
+  stage: notificacao
+  tags:
+  - executor-deploy
+  when: on_failure
+  script:
+  - echo sh notificacaoFalha.sh
+```
+> Correto! Dessa forma, esse job só será executado caso aconteça algum problema nos outros passos da pipeline.
+
+- B
+Adicionando a palavra reservada “when” ao job e definindo “always” como parâmetro.
+```yml
+notificacao-falhas:
+  stage: notificacao
+  tags:
+  - executor-deploy
+  when: always
+  script:
+  - echo sh notificacaoFalha.sh
+```
+
+- C
+Adicionando a palavra reservada “when” ao job e definindo “on_success” como parâmetro.
+```yml
+notificacao-falhas:
+  stage: notificacao
+  tags:
+  - executor-deploy
+  when: on_success
+  script:
+  - echo sh notificacaoFalha.sh
+```
