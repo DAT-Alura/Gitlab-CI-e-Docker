@@ -29,3 +29,25 @@ Podemos adicionar um novo endereço remoto, apontando diretamente para um projet
 git remote add meualias https://gitlab.com/meuusuario
 ```
 > Correto! Dessa forma, além de versionar com gitlab, não precisamos nos desfazer do versionamento com github.
+
+## Aula 3
+
+1 - Ao implementar a integração contínua em nosso processo de desenvolvimento, conseguimos diminuir consideravelmente os problemas que tínhamos em relação às divergências entre os ambientes de produção e desenvolvimento. Implementamos na pipeline do gitlab uma tarefa de atualização da imagem Docker e publicação na nuvem, dessa forma sempre que a imagem é alterada, automaticamente atualizamos a que está no Docker hub. Para atualizarmos a imagem no docker hub, utilizamos os comandos docker pull e docker push. Nessa mesma ordem, para que serve os comandos docker pull e docker push?
+
+- A
+O comando docker pull é utilizado para criação das tags de versionamento do docker hub, e o docker push utilizamos para realizar um build da imagem docker.
+```bash
+docker pull minha-imagem:1.0.0 minha:imagem:1.0.0
+docker push -t minha-imagem .
+```
+
+- B
+O comando docker pull é utilizado para baixar uma imagem de um repositório remoto, e o docker push utilizamos para criar um container com todo nosso projeto para nuvem.
+
+- __C__
+O comando docker pull é utilizado para baixar uma imagem de um repositório remoto, e o docker push utilizamos para enviar uma imagem ao repositório remoto. Para utilizarmos os dois comandos, precisamos sempre informar o nome da imagem docker que estamos manipulando.
+```bash
+docker pull minha-imagem:latest || true
+docker push jnlucas/minha-imagem:latest
+```
+> Correto! Desta forma, sempre que quisermos atualizar nosso ambiente local, utilizamos o docker pull; e sempre que quisermos atualizar nosso ambiente remoto, utilizamos o comando docker push.
