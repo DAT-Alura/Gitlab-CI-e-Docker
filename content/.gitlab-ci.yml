@@ -103,4 +103,4 @@ notificacao-falhas:
   - executor-deploy
   when: on_failure
   script:
-  - echo sh notificacaoFalha.sh
+  - sh notificacaoFalha.sh
