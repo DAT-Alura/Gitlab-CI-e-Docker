@@ -51,3 +51,28 @@ docker pull minha-imagem:latest || true
 docker push jnlucas/minha-imagem:latest
 ```
 > Correto! Desta forma, sempre que quisermos atualizar nosso ambiente local, utilizamos o docker pull; e sempre que quisermos atualizar nosso ambiente remoto, utilizamos o comando docker push.
+
+## Aula 4
+
+1 - Para garantirmos que todos os testes sejam executados em um ambiente semelhante ao de produção, precisamos garantir também que o executor de tarefas seja uma máquina igual a de produção, onde podemos configurar as variáveis de conexão e conexão com outros servidores remotos. Como esses dados são dados sensíveis a nosso negócio, para garantirmos a segurança entre esses ambientes, vamos configurar nosso próprio executor de tarefas utilizando o gitlab-runner. Com isso, além de garantir uma paridade entre os ambientes, garantimos também a segurança dos dados nesse executor. Após a criação desse novo runner, como podemos informar para os jobs dentro do pipeline qual executor deve pegar a tarefa?
+
+- A
+Dentro do pipeline, devemos utilizar a palavra reservada “dependencies”, assim colocamos uma dependência para esse runner
+```yml
+dependencies:
+  - build-docker
+```
+
+- __B__
+Dentro do pipeline, devemos utilizar a palavra reservada “tags” e nela informar o nome da tag que configuramos dentro do gitlab-runner
+```yml
+tags:
+  - executor-tarefas
+```
+> Correto!, Dessa forma, o job será executado pelo runner que tenha a mesma tag informada.
+
+- C
+Dentro do pipeline, podemos adicionar na palavra reservada “stage” o nome do executor de tarefas.
+```yml
+stage: build
+```
