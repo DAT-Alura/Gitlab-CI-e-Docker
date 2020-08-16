@@ -109,3 +109,12 @@ test-project:
 
 - C
 Não é possível fazer essa configuração no pipeline, pois todas as tarefas devem ser executadas isoladamente.
+
+## Aula 6
+
+1 - Para realizarmos um deploy da aplicação após a execução dos testes unitários, precisaremos criar mais um passo dentro da pipeline que garanta tal tarefa. Porém, para que esse passo funcione, precisamos garantir acesso ao servidor remoto, para que a entrega do software aconteça nesse ambiente. Como podemos garantir acesso ao servidor remoto para que o deploy aconteça?
+
+- Podemos criar um par de chaves pública e privada entre o runner e o servidor de homologação com o comando “ssh-keygen”, colocando a chave privada gerada no ambiente de homologação.
+- __Criando um par de chaves (pública e privada) no runner com o comando “ssh-keygen”, e em seguida disponibilizamos a chave pública no servidor de homologação.__
+> Correto! Dessa forma ao gerarmos um par de chaves, podemos adicionar a chave pública no servidor de homologação e garantir o acesso do executor de tarefas a essa máquina.
+- Para esse passo, o correto é realizar o deploy manualmente, pois não há maneiras de conceder acesso a outras máquinas.
